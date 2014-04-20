@@ -1,0 +1,26 @@
+{
+	nid: '394',
+	title: '"Al Manakh 2," Debate on Tour',
+	field_event_date_value: '2009-12-12 20:00:00',
+	body: 'Saturday, December 12, 3-5pm.<br />\r\n<br />\r\n&quot;Al Manakh 2,&quot; Debate on Tour<br />\r\nCo-sponsored by the Netherlands Architecture Institute<br />\r\n<br />\r\nFollowing previous debates in Venice and Mumbai, this (third of four planned debates) North American installment of the Netherlands Architecture Institute&#39;s &quot;Debate on Tour&quot; series will focus on the relation of short-stay visitors -- via tourism or business -- to the form, function, use and future of the cities of the Gulf. How do these places accommodate short stays? What parallels or differences emerge in comparison to the short-stay capital of the world, New York City?<br />\r\n<br />\r\nThe discussions that emerge from the four global debates will inform the forthcoming publication &quot;Al Manakh 2: Export Gulf,&quot; a collaborative investigation into Gulf cities by the NAi, OMA-AMO, PinkTank (Dubai) and &quot;Volume Magazine.&quot;<br />\r\n<br />\r\n<u>Featuring:</u><br />\r\n<strong>Alex Deffner</strong>, University of Thessaly, Greece<br />\r\n<strong>Waleed Hazbun</strong>, The Johns Hopkins University, USA<br />\r\n<strong>Christos Liouris</strong>, University of Thessaly, Greece<br />\r\n<strong>Jeffrey Inaba</strong>, Columbia University GSAPP, USA<br />\r\n<strong>Daniel van der Velden</strong>, Metahaven, The Netherlands<br />\r\n<strong>Mark Wigley</strong>, Columbia University GSAPP, USA<br />\r\n<br />\r\n<strong>Studio-X</strong><br />\r\n180 Varick Street, STE 1610<br />\r\nNew York, NY 10014',
+	field_event_location_value: '<ul class="hierarchical-select-lineages"><li class="lineage-0 odd first last"><span class="lineage-item lineage-item-level-0">New York</span><span class="hierarchical-select-item-separator">›</span><span class="lineage-item lineage-item-level-1">Studio-X NYC</span></li></ul>',
+	field_event_taxonomy_type_value: 'Debate',
+	field_event_calendar_type_value: 'Studio-X'
+}
+
+
+
+
+<ul class="hierarchical-select-lineages">
+	<li class="lineage-0 odd first last">
+		<span class="lineage-item lineage-item-level-0">
+			New York
+		</span>
+		<span class="hierarchical-select-item-separator">
+			›
+		</span>
+		<span class="lineage-item lineage-item-level-1">
+			Studio-X NYC
+		</span>
+	</li>
+</ul>
