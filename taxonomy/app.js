@@ -1,6 +1,8 @@
 var request = require('request');
 var fs = require('fs');
 var csv = require('fast-csv');
+
+//npm install sleep
 var sleep = require('sleep');
 
 var output = [];
@@ -13,9 +15,12 @@ request( 'http://events.gsapp.org/eventlog-with-speakers-by-year/2014', function
 
 		console.log('body:');
 		//console.log(body);
+
+
+		//trying to force delay till after 
 		prepTaxonomy(fromJSONtoCSV(body, writeToCSV));
 
-		//
+		
 		
 		
 	}
@@ -25,6 +30,7 @@ request( 'http://events.gsapp.org/eventlog-with-speakers-by-year/2014', function
 
 
 function prepTaxonomy (callback) {
+	// brings in taxonomy csv, converts to dictionary. 
 	
 	csv
 	 .fromPath("C:/Users/ebberly/Desktop/Google Drive/05 Cloud TA/01 Studio-X Book/10 scripts/01 csv output/eventspeopletax.csv")
@@ -37,7 +43,8 @@ function prepTaxonomy (callback) {
 
 	     console.log("done");
 
-	     //console.log(taxDictionary[14]);		
+	     // can get the dictionary value here:
+	     console.log("it works here: " + taxDictionary[14]);		
 			
 	     callback;
 	     
@@ -52,7 +59,7 @@ function prepTaxonomy (callback) {
 
 function fromJSONtoCSV(data, callback){
 
-	console.log('fromJSONtoCSV called');
+	console.log('fromJSONtoCSV called.');
 	//remove the parens that Drupal wraps the JSON response with
 	var data_clean = data.substring(1, data.length - 1);
 
@@ -70,8 +77,16 @@ function fromJSONtoCSV(data, callback){
 			var node_clone = {};
 
 			node_clone.title = node.title;
+
+
+			// PROBLEm
+			console.log("but doesn't work here: " + taxDictionary[14]);
+			
+
 			node_clone.speaker = taxDictionary[14];
 			console.log('speaker: '+ node_clone.speaker);
+
+
 			//console.log('field: '+ node.field_event_people_value);
 			//console.log(node.name);
 
