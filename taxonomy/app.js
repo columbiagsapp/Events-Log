@@ -8,23 +8,26 @@ var sleep = require('sleep');
 var output = [];
 var taxDictionary = {};
 
-request( 'http://events.gsapp.org/eventlog-with-speakers-by-year/2014', function (error, response, body) {
 
-	console.log('request response:');
-	if (!error && response.statusCode == 200) {
+prepTaxonomy(getYearData);
 
-		console.log('body:');
-		//console.log(body);
+function getYearData() {
+	request( 'http://events.gsapp.org/eventlog-with-speakers-by-year/2013', function (error, response, body) {
 
+		//console.log('request response:');
+		if (!error && response.statusCode == 200) {
 
-		//trying to force delay till after 
-		prepTaxonomy(fromJSONtoCSV(body, writeToCSV));
+			//console.log('body:');
+			//console.log(body);			
+			
+			fromJSONtoCSV(body, writeToCSV)
+		}
 
 		
 		
-		
-	}
-});
+	});
+}
+
 
 
 
@@ -33,7 +36,7 @@ function prepTaxonomy (callback) {
 	// brings in taxonomy csv, converts to dictionary. 
 	
 	csv
-	 .fromPath("C:/Users/ebberly/Desktop/Google Drive/05 Cloud TA/01 Studio-X Book/10 scripts/01 csv output/eventspeopletax.csv")
+	 .fromPath("C:/Users/ebberly/Desktop/Google Drive/05 Cloud TA/01 Studio-X Book/09 data/140528_Taxonomy.csv")
 	 .on("record", function(data){
 	 	taxDictionary[data[0]]= data[1];
    				
@@ -41,12 +44,10 @@ function prepTaxonomy (callback) {
 	 })
 	 .on("end", function(data){
 
-	     console.log("done");
+	     console.log(taxDictionary);
 
-	     // can get the dictionary value here:
-	     console.log("it works here: " + taxDictionary[14]);		
-			
-	     callback;
+	     console.log("done");
+	     callback();
 	     
 	 });
 
@@ -67,8 +68,8 @@ function fromJSONtoCSV(data, callback){
 	var nodes = JSON.parse( data_clean ).nodes;
 
 	//loop through all nodes and add them as comma separated fields 
-	//for(var n = 0; n < nodes.length; n++){
-	for(var n = 0; n < 3; n++){	
+	for(var n = 0; n < nodes.length; n++){
+	//for(var n = 0; n < 3; n++){	
 		(function(n) {
 			//temporary binding to make this simpler
 			var node = nodes[n].node;
@@ -77,14 +78,15 @@ function fromJSONtoCSV(data, callback){
 			var node_clone = {};
 
 			node_clone.title = node.title;
+			//node_clone.fieldeventpeoplevalue = node.field_event_people_value;
+			node_clone.fieldeventpeoplevalue = taxDictionary[node.field_event_people_value]
+			node_clone.eventID = node.nid;
+			//node_clone.speaker = taxDictionary[nid];
 
 
-			// PROBLEm
-			console.log("but doesn't work here: " + taxDictionary[14]);
-			
-
-			node_clone.speaker = taxDictionary[14];
 			console.log('speaker: '+ node_clone.speaker);
+			console.log('title: '+ node_clone.title);
+
 
 
 			//console.log('field: '+ node.field_event_people_value);
@@ -112,7 +114,7 @@ function writeToCSV(){
 
 
 	csv
-		.writeToPath("C:/Users/ebberly/Desktop/Google Drive/05 Cloud TA/01 Studio-X Book/10 scripts/01 csv output/eventspeople2014.csv", output, {headers: true})
+		.writeToPath("C:/Users/ebberly/Desktop/Google Drive/05 Cloud TA/01 Studio-X Book/09 data/02 output/eventspeople2013.csv", output, {headers: true})
 		.on("finish", function(){
 		console.log("done!");
 	});
