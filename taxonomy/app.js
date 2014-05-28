@@ -1,23 +1,58 @@
 var request = require('request');
 var fs = require('fs');
 var csv = require('fast-csv');
+var sleep = require('sleep');
 
-
+var output = [];
+var taxDictionary = {};
 
 request( 'http://events.gsapp.org/eventlog-with-speakers-by-year/2014', function (error, response, body) {
+
 	console.log('request response:');
 	if (!error && response.statusCode == 200) {
 
 		console.log('body:');
-		console.log(body);
+		//console.log(body);
+		prepTaxonomy(fromJSONtoCSV(body, writeToCSV));
 
-		//fromJSONtoCSV(body, writeToCSV);
+		//
+		
+		
 	}
 });
 
 
+
+
+function prepTaxonomy (callback) {
+	
+	csv
+	 .fromPath("C:/Users/ebberly/Desktop/Google Drive/05 Cloud TA/01 Studio-X Book/10 scripts/01 csv output/eventspeopletax.csv")
+	 .on("record", function(data){
+	 	taxDictionary[data[0]]= data[1];
+   				
+			
+	 })
+	 .on("end", function(data){
+
+	     console.log("done");
+
+	     //console.log(taxDictionary[14]);		
+			
+	     callback;
+	     
+	 });
+
+	
+
+	
+
+}
+
+
 function fromJSONtoCSV(data, callback){
 
+	console.log('fromJSONtoCSV called');
 	//remove the parens that Drupal wraps the JSON response with
 	var data_clean = data.substring(1, data.length - 1);
 
@@ -25,8 +60,8 @@ function fromJSONtoCSV(data, callback){
 	var nodes = JSON.parse( data_clean ).nodes;
 
 	//loop through all nodes and add them as comma separated fields 
-	for(var n = 0; n < nodes.length; n++){
-
+	//for(var n = 0; n < nodes.length; n++){
+	for(var n = 0; n < 3; n++){	
 		(function(n) {
 			//temporary binding to make this simpler
 			var node = nodes[n].node;
@@ -35,12 +70,14 @@ function fromJSONtoCSV(data, callback){
 			var node_clone = {};
 
 			node_clone.title = node.title;
+			node_clone.speaker = taxDictionary[14];
+			console.log('speaker: '+ node_clone.speaker);
+			//console.log('field: '+ node.field_event_people_value);
+			//console.log(node.name);
 
-			node_clone.speaker = node.field_event_people_value;
-
-			
 
 			output.push( node_clone );
+
 
 			if(n == (nodes.length-1) ){
 				callback();
@@ -57,14 +94,15 @@ function writeToCSV(){
 	
 	console.log('entered writeToCSV()');
 
-	
+
 
 	csv
-		.writeToPath("/Users/troytherrien/Desktop/deleteme/taxonomy/eventspeople2014.csv", output, {headers: true})
+		.writeToPath("C:/Users/ebberly/Desktop/Google Drive/05 Cloud TA/01 Studio-X Book/10 scripts/01 csv output/eventspeople2014.csv", output, {headers: true})
 		.on("finish", function(){
 		console.log("done!");
 	});
 
 
 }
+
 
